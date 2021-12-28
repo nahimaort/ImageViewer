@@ -20,7 +20,16 @@ public class FileImageLoader implements ImageLoader {
 
     @Override
     public Image load() {
-        return new ProxyImage(this.files[this.current]);
+        Image image = null;
+        try {
+            image = new ProxyImage(this.files[this.current]);
+        } catch (java.lang.ArrayIndexOutOfBoundsException e) {
+            if (this.files.length == 0) {
+                System.out.println("ERROR: No images available to show");
+                System.exit(0);
+            }
+        }
+        return image;
     }
 
     @Override
