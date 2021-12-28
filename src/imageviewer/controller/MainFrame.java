@@ -1,5 +1,6 @@
 package imageviewer.controller;
 
+import imageviewer.persistence.ImageLoader;
 import imageviewer.ui.ImageDisplay;
 import imageviewer.ui.SwingImageDisplay;
 import java.awt.BorderLayout;
@@ -14,8 +15,10 @@ import javax.swing.WindowConstants;
 
 public class MainFrame extends JFrame {
     private ImageDisplay imageDisplay;
+    final ImageLoader imageLoader;
     
-    public MainFrame() {
+    public MainFrame(ImageLoader imageLoader) {
+        this.imageLoader = imageLoader;
         this.setTitle("Image Viewer");
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setSize(800, 600);
@@ -39,11 +42,8 @@ public class MainFrame extends JFrame {
     }
     
     private ActionListener prevImage() {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                imageDisplay.show(imageDisplay.current().prev());
-            }
+        return e -> {
+            imageDisplay.show(imageLoader.prev());
         };
     }
 
@@ -54,11 +54,8 @@ public class MainFrame extends JFrame {
     }
     
     private ActionListener nextImage() {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                imageDisplay.show(imageDisplay.current().next());
-            }
+        return e -> {
+            imageDisplay.show(imageLoader.next());
         };
     }
 
